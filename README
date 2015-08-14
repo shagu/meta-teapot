@@ -1,0 +1,51 @@
+meta-teapot
+===========
+
+The openembedded/Yocto layer for teapot distribution.
+It's focused on mainline Kernel and u-Boot. 
+If you want a feature-complete-desktop-linux, then you should not use layer.
+
+buildchain
+==========
+
+Checkout the oe base repositories:
+	git clone git://git.openembedded.org/openembedded-core oe-core
+	cd oe-core
+	git clone git://git.openembedded.org/bitbake bitbake
+
+Checkout the huge oe package repository:
+	git clone git://git.openembedded.org/meta-openembedded
+
+Checkout the teapot repositories:
+	git clone https://github.com/shagu/meta-teapot.git
+	git clone https://github.com/shagu/meta-teapot-bsp.git
+
+init build / generate builddir:
+	source ./oe-init-build-env
+
+configure your local.conf (conf/local.conf):
+	DISTRO ?= "teapot"
+
+configure your bblayers.conf (conf/bblayers.conf):
+	LCONF_VERSION = "5"
+
+	BBPATH = "${TOPDIR}"
+	BBFILES ?= ""
+
+	BBLAYERS ?= " \
+	  ${TOPDIR}/../meta \
+	  ${TOPDIR}/../meta-teapot \
+	  ${TOPDIR}/../meta-teapot-bsp \
+	  ${TOPDIR}/../meta-openembedded/meta-oe \
+	  ${TOPDIR}/../meta-openembedded/meta-multimedia \
+	  "
+
+	BBLAYERS_NON_REMOVABLE ?= " \
+	  ${TOPDIR}/../meta \
+	  "
+
+build your first image for default target:
+	bitbake base-image
+
+or for ecafe target:
+	MACHINE=ecafe bitbake base-image

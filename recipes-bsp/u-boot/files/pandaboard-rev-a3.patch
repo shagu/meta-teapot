@@ -1,0 +1,11 @@
+--- a/include/configs/ti_omap4_common.h
++++ b/include/configs/ti_omap4_common.h
+@@ -47,7 +47,7 @@
+  * the timings to use or use pre-determined timings (based on using the
+  * dynamic method.  Default to the static timing infomation.
+  */
+-#define CONFIG_SYS_EMIF_PRECALCULATED_TIMING_REGS
++/* #define CONFIG_SYS_EMIF_PRECALCULATED_TIMING_REGS */
+ #ifndef CONFIG_SYS_EMIF_PRECALCULATED_TIMING_REGS
+ #define CONFIG_SYS_AUTOMATIC_SDRAM_DETECTION
+ #define CONFIG_SYS_DEFAULT_LPDDR2_TIMINGS

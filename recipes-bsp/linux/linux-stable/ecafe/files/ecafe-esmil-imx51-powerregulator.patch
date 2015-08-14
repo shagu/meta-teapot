@@ -1,0 +1,125 @@
+From fcc404b327cb61598de5ef57705836b1a4293482 Mon Sep 17 00:00:00 2001
+From: Emil Renner Berthing <kernel@esmil.dk>
+Date: Mon, 1 Dec 2014 19:24:47 +0100
+Subject: [PATCH] regulator: mc13892: add system power-off support
+
+Signed-off-by: Emil Renner Berthing <kernel@esmil.dk>
+---
+ Documentation/devicetree/bindings/mfd/mc13xxx.txt |  2 ++
+ arch/arm/boot/dts/imx51-na04.dts                  |  1 +
+ drivers/mfd/mc13xxx-core.c                        |  3 +++
+ drivers/regulator/mc13892-regulator.c             | 30 ++++++++++++++++++++++-
+ include/linux/mfd/mc13xxx.h                       |  1 +
+ 5 files changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/mfd/mc13xxx.txt b/Documentation/devicetree/bindings/mfd/mc13xxx.txt
+index 8aba488..abeb16b 100644
+--- a/Documentation/devicetree/bindings/mfd/mc13xxx.txt
++++ b/Documentation/devicetree/bindings/mfd/mc13xxx.txt
+@@ -8,6 +8,8 @@ Optional properties:
+ - fsl,mc13xxx-uses-codec : Indicate the Audio Codec is being used
+ - fsl,mc13xxx-uses-rtc : Indicate the RTC is being used
+ - fsl,mc13xxx-uses-touch : Indicate the touchscreen controller is being used
++- fsl,mc13xxx-uses-poweroff : Indicate the regulator is used to power off the
++  system
+ 
+ Sub-nodes:
+ - codec: Contain the Audio Codec node.
+diff --git a/arch/arm/boot/dts/imx51-na04.dts b/arch/arm/boot/dts/imx51-na04.dts
+index 1ca4e23..ea6c49c 100644
+--- a/arch/arm/boot/dts/imx51-na04.dts
++++ b/arch/arm/boot/dts/imx51-na04.dts
+@@ -225,6 +225,7 @@
+ 		interrupt-parent = <&gpio1>;
+ 		interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
+ 		fsl,mc13xxx-uses-rtc;
++		fsl,mc13xxx-uses-poweroff;
+ 
+ 		regulators {
+ 			sw1_reg: sw1 {
+diff --git a/drivers/mfd/mc13xxx-core.c b/drivers/mfd/mc13xxx-core.c
+index 64dde5d..343eabd 100644
+--- a/drivers/mfd/mc13xxx-core.c
++++ b/drivers/mfd/mc13xxx-core.c
+@@ -395,6 +395,9 @@ static int mc13xxx_probe_flags_dt(struct mc13xxx *mc13xxx)
+ 	if (of_get_property(np, "fsl,mc13xxx-uses-touch", NULL))
+ 		mc13xxx->flags |= MC13XXX_USE_TOUCHSCREEN;
+ 
++	if (of_get_property(np, "fsl,mc13xxx-uses-poweroff", NULL))
++		mc13xxx->flags |= MC13XXX_USE_POWEROFF;
++
+ 	return 0;
+ }
+ #else
+diff --git a/drivers/regulator/mc13892-regulator.c b/drivers/regulator/mc13892-regulator.c
+index 0d17c92..926bc29 100644
+--- a/drivers/regulator/mc13892-regulator.c
++++ b/drivers/regulator/mc13892-regulator.c
+@@ -19,12 +19,14 @@
+ #include <linux/init.h>
+ #include <linux/err.h>
+ #include <linux/module.h>
++#include <linux/delay.h>
+ #include "mc13xxx.h"
+ 
+ #define MC13892_REVISION			7
+ 
+ #define MC13892_POWERCTL0			13
+-#define MC13892_POWERCTL0_USEROFFSPI		3
++#define MC13892_POWERCTL0_WARMEN		(1<<2)
++#define MC13892_POWERCTL0_USEROFFSPI		(1<<3)
+ #define MC13892_POWERCTL0_VCOINCELLVSEL		20
+ #define MC13892_POWERCTL0_VCOINCELLVSEL_M	(7<<20)
+ #define MC13892_POWERCTL0_VCOINCELLEN		(1<<23)
+@@ -528,6 +530,20 @@ static unsigned int mc13892_vcam_get_mode(struct regulator_dev *rdev)
+ 
+ static struct regulator_ops mc13892_vcam_ops;
+ 
++static struct mc13xxx *mc13892_power_off_handle;
++
++static void mc13892_power_off(void)
++{
++	struct mc13xxx *mc13892 = mc13892_power_off_handle;
++
++	mc13xxx_lock(mc13892);
++	mc13xxx_reg_rmw(mc13892, MC13892_POWERCTL0,
++			MC13892_POWERCTL0_USEROFFSPI | MC13892_POWERCTL0_WARMEN,
++			MC13892_POWERCTL0_USEROFFSPI);
++	mc13xxx_unlock(mc13892);
++	msleep(500);
++}
++
+ static int mc13892_regulator_probe(struct platform_device *pdev)
+ {
+ 	struct mc13xxx_regulator_priv *priv;
+@@ -623,6 +639,18 @@ static int mc13892_regulator_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++	if (mc13xxx_get_flags(mc13892) & MC13XXX_USE_POWEROFF) {
++		/* set the pm_power_off function
++		 * or complain if it's already set */
++		if (pm_power_off == NULL) {
++			mc13892_power_off_handle = mc13892;
++			pm_power_off = mc13892_power_off;
++		} else
++			dev_err(&pdev->dev,
++					"%s: pm_power_off function already registered",
++					__func__);
++	}
++
+ 	return 0;
+ 
+ err_unlock:
+diff --git a/include/linux/mfd/mc13xxx.h b/include/linux/mfd/mc13xxx.h
+index 638222e..6e5b510 100644
+--- a/include/linux/mfd/mc13xxx.h
++++ b/include/linux/mfd/mc13xxx.h
+@@ -224,6 +224,7 @@ struct mc13xxx_codec_platform_data {
+ #define MC13XXX_USE_CODEC	(1 << 1)
+ #define MC13XXX_USE_ADC		(1 << 2)
+ #define MC13XXX_USE_RTC		(1 << 3)
++#define MC13XXX_USE_POWEROFF	(1 << 4)
+ 
+ struct mc13xxx_platform_data {
+ 	unsigned int flags;

@@ -1,0 +1,40 @@
+# Required-Start:       $networking
+# Default-Start:        3 4 5
+# Default-Stop:         1
+# Short-Description:    TVHeadend VDR Server
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/tvheadend
+NAME=tvheadend
+DESC="tvheadend server"
+TVHEADEND_OPTIONS="-C -w 80"
+
+case "$1" in
+  start)
+		modprobe dvb-usb-technisat-usb2 || true
+
+        echo -n "Starting $DESC: "
+        start-stop-daemon -S -b -x "$DAEMON" -- ${TVHEADEND_OPTIONS}
+        echo "$NAME."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        start-stop-daemon -K -x "$DAEMON"
+        echo "$NAME."
+        ;;
+  restart|force-reload)
+        echo -n "Restarting $DESC: "
+        start-stop-daemon -K -x "$DAEMON"
+        sleep 3
+        start-stop-daemon -S -b -x "$DAEMON" -- ${TVHEADEND_OPTIONS}
+		;;
+  *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
+

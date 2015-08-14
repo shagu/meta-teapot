@@ -1,0 +1,45 @@
+--- a/include/configs/wandboard.h	2014-09-11 15:12:44.364992799 +0200
++++ b/include/configs/wandboard.h	2014-09-11 15:19:02.358342487 +0200
+@@ -172,6 +172,9 @@
+ 			"echo '- no FWBADAPT-7WVGA-LCD-F07A-0102 display';" \
+ 		"fi; " \
+ 		"setenv bootargs ${bootargs} ${fbmem}\0" \
++	"loadbootenv=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} uEnv.txt\0" \
++	"importbootenv=echo Importing environment from mmc (uEnv.txt)...; " \
++	"env import -t $loadaddr $filesize\0" \
+ 	"loadbootscript=" \
+ 		"fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
+ 	"bootscript=echo Running bootscript from mmc ...; " \
+@@ -219,16 +222,22 @@
+ 		"fi;\0"
+ 
+ #define CONFIG_BOOTCOMMAND \
+-	   "mmc dev ${mmcdev}; if mmc rescan; then " \
+-		   "if run loadbootscript; then " \
+-			   "run bootscript; " \
+-		   "else " \
+-			   "if run loadimage; then " \
+-				   "run mmcboot; " \
+-			   "else run netboot; " \
+-			   "fi; " \
+-		   "fi; " \
+-	   "else run netboot; fi"
++		"mmc dev ${mmcdev};" \
++		"if mmc rescan; then " \
++		"echo SD/MMC found on device ${mmcdev};" \
++		"if run loadbootenv; then " \
++		  "run importbootenv;" \
++		"fi;" \
++		"echo Checking if uenvcmd is set ...;" \
++		"if test -n $uenvcmd; then " \
++			"echo Running uenvcmd ...;" \
++			"run uenvcmd;" \
++		"fi;" \
++		"echo Running default loadimage ...;" \
++		"if run loadimage; then " \
++			"run mmcboot;" \
++		"fi;" \
++	"fi;"
+ 
+ /* Miscellaneous configurable options */
+ #define CONFIG_SYS_LONGHELP
