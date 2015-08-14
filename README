@@ -2,9 +2,19 @@ meta-teapot
 ===========
 
 Teapot is an openembedded/yocto layer for serveral arm boards.
-The layer is focused on providing a working mainline kernel and u-boot for theese architectures.
-If a feature-complete-linux is required, you should not use layer and fallback to the vendor kernels 
-provided by other layers.
+The layer is focused on providing a working mainline kernel and u-boot.
+
+The following machines are supported:
+- bananapi (v1)
+- beaglebone (black)
+- cubox (the old marvel one)
+- ecafe (netbook)
+- pandaboard (revA3)
+- raspberrypi (v1)
+- wandboard (quad)
+
+If a feature-complete-linux is required, you should not use layer 
+and fallback to the vendor kernels provided by other layers.
 
 buildchain
 ==========
