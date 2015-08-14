@@ -1,9 +1,10 @@
 meta-teapot
 ===========
 
-The openembedded/Yocto layer for teapot distribution.
-It's focused on mainline Kernel and u-Boot. 
-If you want a feature-complete-desktop-linux, then you should not use layer.
+Teapot is an openembedded/yocto layer for serveral arm boards.
+The layer is focused on providing a working mainline kernel and u-boot for theese architectures.
+If a feature-complete-linux is required, you should not use layer and fallback to the vendor kernels 
+provided by other layers.
 
 buildchain
 ==========
@@ -16,9 +17,8 @@ Checkout the oe base repositories:
 Checkout the huge oe package repository:
 	git clone git://git.openembedded.org/meta-openembedded
 
-Checkout the teapot repositories:
+Checkout the teapot repository:
 	git clone https://github.com/shagu/meta-teapot.git
-	git clone https://github.com/shagu/meta-teapot-bsp.git
 
 init build / generate builddir:
 	source ./oe-init-build-env
@@ -35,9 +35,7 @@ configure your bblayers.conf (conf/bblayers.conf):
 	BBLAYERS ?= " \
 	  ${TOPDIR}/../meta \
 	  ${TOPDIR}/../meta-teapot \
-	  ${TOPDIR}/../meta-teapot-bsp \
 	  ${TOPDIR}/../meta-openembedded/meta-oe \
-	  ${TOPDIR}/../meta-openembedded/meta-multimedia \
 	  "
 
 	BBLAYERS_NON_REMOVABLE ?= " \
