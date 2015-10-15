@@ -17,8 +17,8 @@ SRC_URI = "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${PV}.tar.xz \
 	  file://sunxi-sata-enable-pmp.patch \
           file://defconfig"
 
-SRC_URI[md5sum] = "32cb4dd9f14d37bf71bafa6ed368f769"
-SRC_URI[sha256sum] = "3ee2f2bdcb8ecf729fc7ed0545a6a2292f2853bd0eb259bc4124265a6ad4909f"
+SRC_URI[md5sum] = "936530a3b28f38ec9dbfa1fcabe9acd4"
+SRC_URI[sha256sum] = "4ca6c783a0bc87573f5c95e49306cbe5f83dc1cd5afb44ecc9a1917f39e5ad66"
 
 S = "${WORKDIR}/linux-${PV}"
 
