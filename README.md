@@ -1,64 +1,64 @@
-Teapot Distribution
-===================
+# Teapot Distribution
 
-"Teapot" is an openembedded/yocto layer for serveral arm boards.
-This distribution is focused on providing minimal images 
+A yocto/openembedded layer for serveral ARM based boards.
+This distribution is focused on minimal images 
 with a bootable mainline kernel and u-boot.
 
-supported hardware
-==================
-- bananapi (v1)
-- beaglebone (black)
-- cubox (the old marvel one)
-- ecafe (netbook)
-- pandaboard (revA3)
-- raspberrypi (v1)
-- wandboard (quad)
+![meta-teapot](http://mephis.he-hosting.de/teapot/teapot-white.png)
 
-images
-======
-- base-image
+# Supported hardware
+- **bananapi** (v1)
+- **beaglebone** (black)
+- **cubox** (the old marvel one)
+- **ecafe** (netbook)
+- **pandaboard** (revA3)
+- **raspberrypi** (v1)
+- **wandboard** (quad)
+
+# Images
+- **base-image**
 
 	The default teapot image. All other images are based on it.
 	It includes core and admin tools like:
 	htop,vim,screen,wifi support, ssh, ...
 
-- dvb-image
+- **dvb-image**
 
 	A dvb image with tvheadend + dvb-firmware (tevii & technisat)
 
-- nas-image
+- **nas-image**
 
 	The nas image ships all the tools you might want to see on a NAS.
 	rsync, mdadm, lvm2, cryptsetup, samba, hdparm and a few convinience scripts.
 	
-	A good working setup: 
-		- Banana Pi
-		- [Sharkoon 5Bay Raid Box](https://de.sharkoon.com/product//11353#desc) 
-		- 5x 2TB Western Digital harddrives
+	My setup: 
+	- Banana Pi
+	- [Sharkoon 5Bay Raid Box](https://de.sharkoon.com/product//11353#desc) 
+	- 5x 2TB Western Digital harddrives
 
-- power-image
+
+- **power-image**
 
 	This image includes tools to manage wireless sockets with your raspberrypi (or other)
 
-	A good working setup:
-		- Raspberry Pi 
-		- ["Funksteckdosen-Set"](http://www.pollin.de/shop/dt/MzMzOTQ0OTk-/Haustechnik/Funkschaltsysteme/Funksteckdosen_Set_mit_3_Steckdosen.html)
-		- [434MHz RF Transmitter](www.amazon.de/gp/product/B007XEXICS)
+	My setup:
+	- Raspberry Pi 
+	- ["Funksteckdosen-Set"](http://www.pollin.de/shop/dt/MzMzOTQ0OTk-/Haustechnik/Funkschaltsysteme/Funksteckdosen_Set_mit_3_Steckdosen.html)
+	- [434MHz RF Transmitter](http://www.amazon.de/gp/product/B007XEXICS)
 
-- sdk-image
+
+- **sdk-image**
 
 	A base image with development tools & headers
 
-- sound-image
+- **sound-image**
 
 	A webradio/music-player image which uses "mpd" for playback.
 
 
-getting started
-===============
+# Instructions
 
-Setup OE:
+### Setup OE:
 
 	$ git clone git://git.openembedded.org/openembedded-core oe-core
 	$ cd oe-core
@@ -66,21 +66,21 @@ Setup OE:
 	$ git clone git://git.openembedded.org/meta-openembedded
 
 
-Setup Teapot:
+### Setup Teapot:
 
 	$ git clone https://github.com/shagu/meta-teapot.git
 
-Prepare for the first build:
+### Prepare for the first build:
 
 	$ source ./oe-init-build-env
 
 
-Configure local.conf (conf/local.conf):
+### Configure local.conf (conf/local.conf):
 
 	DISTRO ?= "teapot"
 
 
-configure bblayers.conf (conf/bblayers.conf):
+### Configure bblayers.conf (conf/bblayers.conf):
 
 	LCONF_VERSION = "5"
 
@@ -97,6 +97,6 @@ configure bblayers.conf (conf/bblayers.conf):
 	  ${TOPDIR}/../meta \
 	  "
 
-First build:
+### First build:
 
 	$ MACHINE=bananapi bitbake base-image
