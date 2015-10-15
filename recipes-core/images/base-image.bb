@@ -17,7 +17,7 @@ IMAGE_INSTALL += " \
 "
 
 ROOTFS_POSTPROCESS_COMMAND += "set_image_root_pw;set_image_config;"
-IMAGE_ROOTPW ?= '\$6\$54br3cyl\$5FYhTslAwHe8oDiBQkg0bS3iwtfBt0nMpkjqjdeVCDEYvqbCWYk3itLZQ3T6f8VJ0X8R0.Wf3K0.dleqKp6ib.'
+IMAGE_ROOTPW ?= '\$6\$wixdy8pV\$Dfgu6z1oj2iXI9sWrUZptm7CGea//P0h1OYKLjBiYYJAMj/R/hWXi.WuyFWt2aPpdNInINeRxS0lk4y2Xvx/5.'
 
 set_image_root_pw() {
   sed -i "s_root::_root:${IMAGE_ROOTPW}:_" ${IMAGE_ROOTFS}${sysconfdir}/shadow
