@@ -10,11 +10,11 @@ BOOTDD_VOLUME_ID ?= "boot"
 SDIMG_ROOTFS_TYPE ?= "ext4"
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_sdcard-wandboard = "${SDIMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP_sdcard_wandboard = "${SDIMG_ROOTFS_TYPE}"
 
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
-IMAGE_DEPENDS_sdcard-wandboard = " \
+IMAGE_DEPENDS_sdcard_wandboard = " \
 			parted-native \
 			mtools-native \
 			dosfstools-native \
@@ -26,7 +26,7 @@ IMAGE_DEPENDS_sdcard-wandboard = " \
 SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.img"
 
 
-IMAGE_CMD_sdcard-wandboard () {
+IMAGE_CMD_sdcard_wandboard () {
 	ROOTFS_SIZE=`du -bks ${SDIMG_ROOTFS} | awk '{print $1}'` # in KiB
   BOOTFS_SIZE="44733"																			 # in KiB
 	BOOT_ALIGNMENT="4096"																		 # in KiB
@@ -45,6 +45,7 @@ IMAGE_CMD_sdcard-wandboard () {
 
   # Create a vfat image with boot files
 	BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
+  rm -f ${WORKDIR}/boot.img 2> /dev/null
 	mkfs.vfat -F 32 -n "${BOOTDD_VOLUME_ID}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
 
 	MTOOLS_SKIP_CHECK=1 mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/zImage ::/

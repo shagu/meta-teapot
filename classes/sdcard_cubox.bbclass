@@ -10,12 +10,12 @@ BOOTDD_VOLUME_ID ?= "boot"
 SDIMG_ROOTFS_TYPE ?= "ext4"
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_sdcard-cubox = "${SDIMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP_sdcard_cubox = "${SDIMG_ROOTFS_TYPE}"
 
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 SDIMG_BOOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.bootfs.${SDIMG_ROOTFS_TYPE}"
 
-IMAGE_DEPENDS_sdcard-cubox = " \
+IMAGE_DEPENDS_sdcard_cubox = " \
 			parted-native \
 			mtools-native \
 			dosfstools-native \
@@ -26,7 +26,7 @@ IMAGE_DEPENDS_sdcard-cubox = " \
 # SD card image name
 SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.img"
 
-IMAGE_CMD_sdcard-cubox () {
+IMAGE_CMD_sdcard_cubox () {
 
 	ROOTFS_SIZE=`du -bks ${SDIMG_ROOTFS} | awk '{print $1}'` # in KiB
     BOOTFS_SIZE="48832"										 # in KiB

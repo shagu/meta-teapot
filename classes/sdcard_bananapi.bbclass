@@ -14,7 +14,7 @@ inherit image_types
 #
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_sdcard-bananapi = "${SDIMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP_sdcard_bananapi = "${SDIMG_ROOTFS_TYPE}"
 
 # Boot partition volume id
 BOOTDD_VOLUME_ID ?= "${MACHINE}"
@@ -29,7 +29,7 @@ IMAGE_ROOTFS_ALIGNMENT = "2048"
 SDIMG_ROOTFS_TYPE ?= "ext4"
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
-IMAGE_DEPENDS_sdcard-bananapi += " \
+IMAGE_DEPENDS_sdcard_bananapi += " \
 			parted-native \
 			mtools-native \
 			dosfstools-native \
@@ -43,7 +43,7 @@ rootfs[depends] += "virtual/kernel:do_deploy sunxi-board-fex:do_deploy"
 # SD card image name
 SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.img"
 
-IMAGE_CMD_sdcard-bananapi () {
+IMAGE_CMD_sdcard_bananapi () {
 
 	# Align partitions
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)
