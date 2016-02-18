@@ -10,10 +10,11 @@ IMAGE_HOSTNAME = "teapot"
 IMAGE_INSTALL = "packagegroup-core-boot ${ROOTFS_PKGMANAGE_BOOTSTRAP} ${CORE_IMAGE_EXTRA_INSTALL}"
 
 IMAGE_INSTALL += " \
-	packagegroup-core-drivers \
 	packagegroup-core-ssh-dropbear \
-	packagegroup-core-wifi \
-	packagegroup-core-tools \
+	packagegroup-teapot-drivers \
+	packagegroup-teapot-wifi \
+	packagegroup-teapot-tools \
+  bash \
 "
 
 ROOTFS_POSTPROCESS_COMMAND += "set_image_root_pw;set_image_config;"
