@@ -6,6 +6,7 @@ require base-image.bb
 IMAGE_HOSTNAME = "thor"
 
 IMAGE_INSTALL += " \
+	git \
 	rsync \
 	mdadm \
 	lvm2 \
