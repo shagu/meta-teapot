@@ -1,4 +1,4 @@
-From 147394a1d8fa0e977a26858c58c59df0447b0344 Mon Sep 17 00:00:00 2001
+From 1af97714f26a4212a1333b6be3d12216a8d31a0d Mon Sep 17 00:00:00 2001
 From: Fabio Estevam <fabio.estevam@freescale.com>
 Date: Fri, 18 Jan 2013 17:22:01 -0200
 Subject: [PATCH] sdma-imx: Add SDMA firmware for Freescale i.MX SOCs
@@ -171,7 +171,7 @@ index 0000000..214626e
 +this Agreement will not operate or be construed as a waiver of any
 +other or a subsequent breach of the same or a different provision.
 diff --git a/firmware/WHENCE b/firmware/WHENCE
-index 0c4d96d..7b778ec 100644
+index 0c4d96de..7b778ec 100644
 --- a/firmware/WHENCE
 +++ b/firmware/WHENCE
 @@ -852,3 +852,16 @@ Licence:

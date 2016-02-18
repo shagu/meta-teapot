@@ -1,4 +1,4 @@
-From fcc404b327cb61598de5ef57705836b1a4293482 Mon Sep 17 00:00:00 2001
+From 752c23880a435ec76bf284cac27952c340467ad1 Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Mon, 1 Dec 2014 19:24:47 +0100
 Subject: [PATCH] regulator: mc13892: add system power-off support
@@ -26,7 +26,7 @@ index 8aba488..abeb16b 100644
  Sub-nodes:
  - codec: Contain the Audio Codec node.
 diff --git a/arch/arm/boot/dts/imx51-na04.dts b/arch/arm/boot/dts/imx51-na04.dts
-index 1ca4e23..ea6c49c 100644
+index dd39f29..c85890a 100644
 --- a/arch/arm/boot/dts/imx51-na04.dts
 +++ b/arch/arm/boot/dts/imx51-na04.dts
 @@ -225,6 +225,7 @@
@@ -38,7 +38,7 @@ index 1ca4e23..ea6c49c 100644
  		regulators {
  			sw1_reg: sw1 {
 diff --git a/drivers/mfd/mc13xxx-core.c b/drivers/mfd/mc13xxx-core.c
-index 64dde5d..343eabd 100644
+index 3f9f4c8..ab82248e 100644
 --- a/drivers/mfd/mc13xxx-core.c
 +++ b/drivers/mfd/mc13xxx-core.c
 @@ -395,6 +395,9 @@ static int mc13xxx_probe_flags_dt(struct mc13xxx *mc13xxx)

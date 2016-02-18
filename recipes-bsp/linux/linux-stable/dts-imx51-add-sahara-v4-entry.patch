@@ -1,4 +1,4 @@
-From 47da4061a3f9844069c054640f15a3cc04a82b22 Mon Sep 17 00:00:00 2001
+From b99db3fd4345147e91c2c01f3099b6b947b8b52b Mon Sep 17 00:00:00 2001
 From: Emil Renner Berthing <kernel@esmil.dk>
 Date: Sun, 29 Mar 2015 20:03:53 +0200
 Subject: [PATCH] ARM: dts: imx51: add SAHARA v4 entry
@@ -9,7 +9,7 @@ Signed-off-by: Emil Renner Berthing <kernel@esmil.dk>
  1 file changed, 9 insertions(+)
 
 diff --git a/arch/arm/boot/dts/imx51.dtsi b/arch/arm/boot/dts/imx51.dtsi
-index c0116cf..e951f9a 100644
+index f46fe9b..da6da44 100644
 --- a/arch/arm/boot/dts/imx51.dtsi
 +++ b/arch/arm/boot/dts/imx51.dtsi
 @@ -247,6 +247,15 @@
