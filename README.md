@@ -87,7 +87,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 
 
 ## MACHINE=ecafe
-<img src="https://www.hercules.com/thumb/phpThumb.php?q=95&w=308&h=308&src=/var/www/www.hercules.com/fichier/h_photo/623/photo_file_slimhdproductb715.png&f=jpeg&bg=FFFFFF" align="right" height="100">
+<img src="https://i.imgur.com/PfR7sAd.jpg" align="right" height="100">
 
     SoC:      Freescale i.MX51
     CPU:      ARM Cortex-A8 800MHz
