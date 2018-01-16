@@ -19,6 +19,7 @@ SRC_URI = "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${PV}.tar.xz \
           file://dts-imx51-add-sahara-v4-entry.patch \
           file://dts-imx51-na04.patch \
           file://regulator-mc13892.patch \
+          file://orange-pi-zero-enable-analog-codec.patch \
           file://defconfig"
 
 SRC_URI[md5sum] = "4e8bb562f8fd33d5ef1feb0435ed2b02"
