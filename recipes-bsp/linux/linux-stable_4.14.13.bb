@@ -21,8 +21,8 @@ SRC_URI = "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${PV}.tar.xz \
           file://regulator-mc13892.patch \
           file://defconfig"
 
-SRC_URI[md5sum] = "3d5ea06d767e2f35c999eeadafc76523"
-SRC_URI[sha256sum] = "cf20e044f17588d2a42c8f2a450b0fd84dfdbd579b489d93e9ab7d0e8b45dbeb"
+SRC_URI[md5sum] = "4e8bb562f8fd33d5ef1feb0435ed2b02"
+SRC_URI[sha256sum] = "4ab46d1b5a0f8ef83b80760f89ae4f5c88431b19b3cf79ffa0c66d6b33e45772"
 
 S = "${WORKDIR}/linux-${PV}"
 do_configure_prepend () {
