@@ -34,9 +34,11 @@ do_configure_prepend () {
 # add required ecafe blobs to the kernel
 addtask do_blobs before do_compile after do_configure
 do_blobs () {
-  cd ${WORKDIR}/linux-${PV}
-  git apply ${WORKDIR}/add-sdma-firmware-for-freescale-imx-socs.patch 2> /dev/null || true
-  cp -rf ${PKG_CONFIG_SYSROOT_DIR}/lib/firmware/rt2870.bin firmware/
+  if [ "${MACHINE}" = "ecafe" ]; then
+    cd ${WORKDIR}/linux-${PV}
+    git apply ${WORKDIR}/add-sdma-firmware-for-freescale-imx-socs.patch 2> /dev/null || true
+    cp -rf ${PKG_CONFIG_SYSROOT_DIR}/lib/firmware/rt2870.bin firmware/
+  fi
 }
 
 
