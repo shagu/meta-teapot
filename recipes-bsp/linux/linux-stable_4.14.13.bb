@@ -4,12 +4,10 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 inherit kernel
 
-require recipes-kernel/linux/linux-dtb.inc
-
 DEPENDS += "lzop-native linux-firmware"
 
-RDEPENDS_kernel-base += "kernel-modules"
-RDEPENDS_kernel-base += "kernel-devicetree"
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base += "kernel-modules"
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base += "kernel-devicetree"
 
 KERNEL_EXTRA_ARGS += "LOADADDR=${UBOOT_ENTRYPOINT}"
 
