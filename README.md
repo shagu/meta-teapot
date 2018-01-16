@@ -91,6 +91,8 @@ with a bootable mainline kernel and u-boot.
 	  ${TOPDIR}/../meta \
 	  ${TOPDIR}/../meta-teapot \
 	  ${TOPDIR}/../meta-openembedded/meta-oe \
+	  ${TOPDIR}/../meta-openembedded/meta-python \
+	  ${TOPDIR}/../meta-openembedded/meta-networking \
 	  "
 
 	BBLAYERS_NON_REMOVABLE ?= " \
