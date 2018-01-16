@@ -67,10 +67,10 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 ## MACHINE=beaglebone
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Beaglebone_Black.jpg/220px-Beaglebone_Black.jpg" align="right" height="100">
 
-    SoC: TI AM335x
-    CPU: ARM Cortex-A8 1GHz
-    Memory: 512MB DDR3 RAM
-    Storage: SD card & 4GB eMMC
+    SoC:      TI AM335x
+    CPU:      ARM Cortex-A8 1GHz
+    Memory:   512MB DDR3 RAM
+    Storage:  SD card & 4GB eMMC
 
 [Wikipedia](https://en.wikipedia.org/wiki/BeagleBoard#BeagleBone_Black)
 
@@ -100,9 +100,9 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 ## MACHINE=pandaboard
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/PandaBoard_described.png/220px-PandaBoard_described.png" align="right" height="100">
 
-    SoC:    TI OMAP4460
-    CPU:    ARM Cortex-A9 1GHz
-    Memory: 1 GB
+    SoC:      TI OMAP4460
+    CPU:      ARM Cortex-A9 1GHz
+    Memory:   1 GB
     Storage:  SD card
 
 [Wikipedia](https://en.wikipedia.org/wiki/PandaBoard)
@@ -127,7 +127,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
     Memory:   2 GB
     Storage:  SD card
 
-[Website](https://www.wandboard.org/): `MACHINE=wandboard`
+[Website](https://www.wandboard.org/)
 
 
 # Image Flavors
@@ -139,7 +139,7 @@ The default teapot image and the core of all other teapot flavors. It includes b
 * vim
 * screen
 * ssh
-* ..
+* ...
 
 ## dvb-image
 
@@ -180,6 +180,3 @@ A flavor which ships development tools and headers with the base image
 ## sound-image
 
 A webradio/music-player image which uses "mpd" for playback.
-
-
-
