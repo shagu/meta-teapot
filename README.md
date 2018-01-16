@@ -4,7 +4,7 @@ A yocto/openembedded layer for serveral ARM based boards.
 This distribution is focused on minimal images 
 with a bootable mainline kernel and u-boot.
 
-![meta-teapot](http://mephis.he-hosting.de/teapot/teapot-white.png)
+![meta-teapot](https://i.imgur.com/liHq1Sb.png)
 
 # Supported hardware
 - **bananapi** (v1)
