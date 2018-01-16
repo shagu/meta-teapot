@@ -1,31 +1,8 @@
-diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 5eb1d03..57eb7ef 100644
---- a/arch/arm/Kconfig
-+++ b/arch/arm/Kconfig
-@@ -585,6 +585,10 @@ config TARGET_MX51_EFIKAMX
- 	bool "Support mx51_efikamx"
- 	select CPU_V7
- 
-+config TARGET_MX51_NA04
-+	bool "Support the Hercules eCAFE Slim/EX HD laptops"
-+	select CPU_V7
-+
- config TARGET_VISION2
- 	bool "Support vision2"
- 	select CPU_V7
-@@ -919,6 +923,7 @@ source "board/freescale/mx6sxsabresd/Kconfig"
- source "board/freescale/vf610twr/Kconfig"
- source "board/gateworks/gw_ventana/Kconfig"
- source "board/genesi/mx51_efikamx/Kconfig"
-+source "board/hercules/mx51_na04/Kconfig"
- source "board/gumstix/pepper/Kconfig"
- source "board/h2200/Kconfig"
- source "board/hale/tt01/Kconfig"
 diff --git a/arch/arm/include/asm/arch-mx5/iomux-mx51.h b/arch/arm/include/asm/arch-mx5/iomux-mx51.h
-index 70aaa37..91dde62 100644
+index 522512e..197a3c9 100644
 --- a/arch/arm/include/asm/arch-mx5/iomux-mx51.h
 +++ b/arch/arm/include/asm/arch-mx5/iomux-mx51.h
-@@ -71,6 +71,7 @@ enum {
+@@ -66,6 +66,7 @@ enum {
  	MX51_PAD_EIM_A25__USBH2_DIR		= IOMUX_PAD(0x454, 0x0c0, 2, __NA_, 0, MX51_USBH_PAD_CTRL),
  	MX51_PAD_EIM_A26__GPIO2_20		= IOMUX_PAD(0x458, 0x0c4, 1, __NA_, 0, MX51_GPIO_PAD_CTRL),
  	MX51_PAD_EIM_A26__USBH2_STP		= IOMUX_PAD(0x458, 0x0c4, 2, __NA_, 0, MX51_USBH_PAD_CTRL),
@@ -33,15 +10,15 @@ index 70aaa37..91dde62 100644
  	MX51_PAD_EIM_A27__USBH2_NXT		= IOMUX_PAD(0x45c, 0x0c8, 2, __NA_, 0, MX51_USBH_PAD_CTRL),
  	MX51_PAD_EIM_EB2__FEC_MDIO		= IOMUX_PAD(0x468, 0x0d4, 3, 0x954, 0, PAD_CTL_PUS_22K_UP | PAD_CTL_SRE_FAST | PAD_CTL_DSE_HIGH | PAD_CTL_HYS),
  	MX51_PAD_EIM_EB3__FEC_RDATA1		= IOMUX_PAD(0x46c, 0x0d8, 3, 0x95c, 0, NO_PAD_CTRL),
-@@ -105,6 +106,7 @@ enum {
+@@ -100,6 +101,7 @@ enum {
  	MX51_PAD_NANDF_CLE__PATA_RESET_B	= IOMUX_PAD(0x4f0, 0x114, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_WP_B__PATA_DMACK		= IOMUX_PAD(0x4f4, 0x118, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_RB0__PATA_DMARQ		= IOMUX_PAD(0x4f8, 0x11c, 1, __NA_, 0, NO_PAD_CTRL),
-+	MX51_PAD_NANDF_RB0__SD3_DATA3		= IOMUX_PAD(0x4f8, 0x11c, 2, 0x948, 0, MX51_SDHCI_PAD_CTRL),
++	MMX51_PAD_NANDF_RB0__SD3_DATA3		= IOMUX_PAD(0x4f8, 0x11c, 2, 0x948, 0, MX51_SDHCI_PAD_CTRL),
  	MX51_PAD_NANDF_RB1__PATA_IORDY		= IOMUX_PAD(0x4fc, 0x120, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_RB2__FEC_COL		= IOMUX_PAD(0x500, 0x124, 1, 0x94c, 0, MX51_PAD_CTRL_2),
  	MX51_PAD_NANDF_RB2__GPIO3_10		= IOMUX_PAD(0x500, 0x124, 3, __NA_, 0, MX51_GPIO_PAD_CTRL),
-@@ -122,23 +124,32 @@ enum {
+@@ -117,23 +119,32 @@ enum {
  	MX51_PAD_NANDF_CS6__FEC_TDATA3		= IOMUX_PAD(0x530, 0x148, 2, __NA_, 0, MX51_PAD_CTRL_5),
  	MX51_PAD_NANDF_CS6__PATA_DA_2		= IOMUX_PAD(0x530, 0x148, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_CS7__FEC_TX_EN		= IOMUX_PAD(0x534, 0x14c, 1, __NA_, 0, MX51_PAD_CTRL_5),
@@ -74,7 +51,7 @@ index 70aaa37..91dde62 100644
  	MX51_PAD_NANDF_D7__PATA_DATA7		= IOMUX_PAD(0x55c, 0x174, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_D6__PATA_DATA6		= IOMUX_PAD(0x560, 0x178, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_D5__PATA_DATA5		= IOMUX_PAD(0x564, 0x17c, 1, __NA_, 0, NO_PAD_CTRL),
-@@ -147,6 +158,7 @@ enum {
+@@ -142,6 +153,7 @@ enum {
  	MX51_PAD_NANDF_D2__PATA_DATA2		= IOMUX_PAD(0x570, 0x188, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_D1__PATA_DATA1		= IOMUX_PAD(0x574, 0x18c, 1, __NA_, 0, NO_PAD_CTRL),
  	MX51_PAD_NANDF_D0__PATA_DATA0		= IOMUX_PAD(0x578, 0x190, 1, __NA_, 0, NO_PAD_CTRL),
@@ -82,9 +59,9 @@ index 70aaa37..91dde62 100644
  	MX51_PAD_CSI2_D12__GPIO4_9		= IOMUX_PAD(0x5bc, 0x1cc, 3, __NA_, 0, MX51_GPIO_PAD_CTRL),
  	MX51_PAD_CSI2_D13__GPIO4_10		= IOMUX_PAD(0x5c0, 0x1d0, 3, __NA_, 0, MX51_GPIO_PAD_CTRL),
  	MX51_PAD_CSPI1_MOSI__ECSPI1_MOSI	= IOMUX_PAD(0x600, 0x210, 0, __NA_, 0, MX51_ECSPI_PAD_CTRL),
-@@ -185,7 +197,13 @@ enum {
- 	MX51_PAD_DI1_PIN3__DI1_PIN3		= IOMUX_PAD(0x72c, 0x32c, 0, __NA_, 0, NO_PAD_CTRL),
+@@ -181,7 +193,13 @@ enum {
  	MX51_PAD_DI1_PIN2__DI1_PIN2		= IOMUX_PAD(0x734, 0x330, 0, __NA_, 0, NO_PAD_CTRL),
+ 	MX51_PAD_DI2_PIN2__FEC_MDC		= IOMUX_PAD(0x74C, 0x344, 2, __NA_, 0, MX51_PAD_CTRL_5),
  	MX51_PAD_DI2_DISP_CLK__DI2_DISP_CLK	= IOMUX_PAD(0x754, 0x34c, 0, __NA_, 0, NO_PAD_CTRL),
 +	MX51_PAD_DI2_DISP_CLK__FEC_RDATA1	= IOMUX_PAD(0x754, 0x34c, 2, 0x95c, 1, NO_PAD_CTRL),
 +	MX51_PAD_DI_GP4__FEC_RDATA2		= IOMUX_PAD(0x758, 0x350, 2, 0x960, 1, NO_PAD_CTRL),
@@ -93,10 +70,10 @@ index 70aaa37..91dde62 100644
 +	MX51_PAD_DISP2_DAT13__FEC_TX_CLK	= IOMUX_PAD(0x790, 0x388, 2, 0x974, 1, MX51_PAD_CTRL_2),
 +	MX51_PAD_DISP2_DAT14__FEC_RDATA0	= IOMUX_PAD(0x794, 0x38c, 2, 0x958, 1, NO_PAD_CTRL),
 +	MX51_PAD_DISP2_DAT15__FEC_TDATA0	= IOMUX_PAD(0x798, 0x390, 2, __NA_, 0, PAD_CTL_DSE_HIGH),
- 	MX51_PAD_SD1_CMD__SD1_CMD		= IOMUX_PAD(0x79c, 0x394, 0x10, __NA_, 0, MX51_SDHCI_PAD_CTRL),
- 	MX51_PAD_SD1_CLK__SD1_CLK		= IOMUX_PAD(0x7a0, 0x398, 0x10, __NA_, 0, MX51_SDHCI_PAD_CTRL | PAD_CTL_HYS),
- 	MX51_PAD_SD1_DATA0__SD1_DATA0		= IOMUX_PAD(0x7a4, 0x39c, 0x10, __NA_, 0, MX51_SDHCI_PAD_CTRL),
-@@ -195,6 +213,7 @@ enum {
+ 	MX51_PAD_DISP2_DAT6__FEC_TDAT1		= IOMUX_PAD(0x774, 0x36C, 2, __NA_, 0, MX51_PAD_CTRL_5),
+ 	MX51_PAD_DISP2_DAT7__FEC_TDAT2		= IOMUX_PAD(0x778, 0x370, 2, __NA_, 0, MX51_PAD_CTRL_5),
+ 	MX51_PAD_DISP2_DAT8__FEC_TDAT3		= IOMUX_PAD(0x77C, 0x374, 2, __NA_, 0, MX51_PAD_CTRL_5),
+@@ -201,6 +219,7 @@ enum {
  	MX51_PAD_GPIO1_0__GPIO1_0		= IOMUX_PAD(0x7b4, 0x3ac, 1, __NA_, 0, MX51_GPIO_PAD_CTRL),
  	MX51_PAD_GPIO1_0__SD1_CD		= IOMUX_PAD(0x7b4, 0x3ac, 0, __NA_, 0, MX51_ESDHC_PAD_CTRL),
  	MX51_PAD_GPIO1_1__SD1_WP		= IOMUX_PAD(0x7b8, 0x3b0, 0, __NA_, 0, MX51_ESDHC_PAD_CTRL),
@@ -105,21 +82,14 @@ index 70aaa37..91dde62 100644
  	MX51_PAD_SD2_CLK__SD2_CLK		= IOMUX_PAD(0x7c0, 0x3b8, 0x10, __NA_, 0, MX51_SDHCI_PAD_CTRL | PAD_CTL_HYS),
  	MX51_PAD_SD2_DATA0__SD2_DATA0		= IOMUX_PAD(0x7c4, 0x3bc, 0x10, __NA_, 0, MX51_SDHCI_PAD_CTRL),
 diff --git a/arch/arm/include/asm/mach-types.h b/arch/arm/include/asm/mach-types.h
-index d4a447b..b8f0a6a 100644
+index 9f82efe..f3db052 100644
 --- a/arch/arm/include/asm/mach-types.h
 +++ b/arch/arm/include/asm/mach-types.h
-@@ -1103,6 +1103,7 @@ extern unsigned int __machine_arch_type;
- #define MACH_TYPE_THALES_ADC           3492
- #define MACH_TYPE_UBISYS_P9D_EVP       3493
- #define MACH_TYPE_ATDGP318             3494
-+#define MACH_TYPE_MX51_NA04            3719
- #define MACH_TYPE_OMAP5_SEVM           3777
- #define MACH_TYPE_ARMADILLO_800EVA     3863
- #define MACH_TYPE_KZM9G                4140
-@@ -14201,6 +14202,18 @@ extern unsigned int __machine_arch_type;
- # define machine_is_atdgp318()	(0)
+@@ -5058,3 +5058,15 @@
+ #define MACH_TYPE_TOMATO               5113
+ #define MACH_TYPE_OMAP3_MRC3D          5114
  #endif
- 
++
 +#ifdef CONFIG_MACH_MX51_NA04
 +# ifdef machine_arch_type
 +#  undef machine_arch_type
@@ -131,10 +101,29 @@ index d4a447b..b8f0a6a 100644
 +#else
 +# define machine_is_mx51_na04()	(0)
 +#endif
+diff --git a/arch/arm/mach-imx/mx5/Kconfig b/arch/arm/mach-imx/mx5/Kconfig
+index d96020d..ad451b1 100644
+--- a/arch/arm/mach-imx/mx5/Kconfig
++++ b/arch/arm/mach-imx/mx5/Kconfig
+@@ -25,6 +25,10 @@ config TARGET_MX51EVK
+ 	select BOARD_LATE_INIT
+ 	select MX51
+ 
++config TARGET_MX51_NA04
++  bool "Support the Hercules eCAFE Slim/EX HD laptops"
++  select CPU_V7
 +
- #ifdef CONFIG_MACH_OMAP5_SEVM
- # ifdef machine_arch_type
- #  undef machine_arch_type
+ config TARGET_MX53ARD
+ 	bool "Support mx53ard"
+ 	select MX53
+@@ -65,6 +69,7 @@ config SYS_SOC
+ 
+ source "board/aries/m53evk/Kconfig"
+ source "board/beckhoff/mx53cx9020/Kconfig"
++source "board/hercules/mx51_na04/Kconfig"
+ source "board/freescale/mx51evk/Kconfig"
+ source "board/freescale/mx53ard/Kconfig"
+ source "board/freescale/mx53evk/Kconfig"
 diff --git a/board/hercules/mx51_na04/Kconfig b/board/hercules/mx51_na04/Kconfig
 new file mode 100644
 index 0000000..8214328
@@ -186,7 +175,7 @@ index 0000000..d7d2aa7
 +obj-y			+= mx51_na04.o
 diff --git a/board/hercules/mx51_na04/mx51_na04.c b/board/hercules/mx51_na04/mx51_na04.c
 new file mode 100644
-index 0000000..c573791
+index 0000000..b2fc62a
 --- /dev/null
 +++ b/board/hercules/mx51_na04/mx51_na04.c
 @@ -0,0 +1,469 @@
@@ -541,7 +530,7 @@ index 0000000..c573791
 +			     PAD_CTL_DSE_MAX | PAD_CTL_SRE_FAST),
 +	};
 +
-+	static struct fsl_esdhc_cfg esdhc_cfg[] = {
++static struct fsl_esdhc_cfg esdhc_cfg[] = {
 +		{
 +			.esdhc_base = MMC_SDHC1_BASE_ADDR,
 +			.max_bus_width = 4,
