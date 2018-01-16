@@ -15,12 +15,12 @@ IMAGE_TYPEDEP_sdcard_cubox = "${SDIMG_ROOTFS_TYPE}"
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 SDIMG_BOOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.bootfs.${SDIMG_ROOTFS_TYPE}"
 
-IMAGE_DEPENDS_sdcard_cubox = " \
-			parted-native \
-			mtools-native \
-			dosfstools-native \
-			virtual/kernel \
-			u-boot-mkimage-native \
+do_image_sdcard[depends] += " \
+			parted-native:do_populate_sysroot \
+			mtools-native:do_populate_sysroot \
+			dosfstools-native:do_populate_sysroot \
+			virtual/kernel:do_deploy \
+			virtual/bootloader:do_deploy \
 			"
 
 # SD card image name

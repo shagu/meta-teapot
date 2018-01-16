@@ -14,12 +14,12 @@ IMAGE_TYPEDEP_sdcard_beaglebone = "${SDIMG_ROOTFS_TYPE}"
 
 SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
-IMAGE_DEPENDS_sdcard_beaglebone = " \
-			parted-native \
-			mtools-native \
-			dosfstools-native \
-			virtual/kernel \
-			virtual/bootloader \
+do_image_sdcard[depends] += " \
+			parted-native:do_populate_sysroot \
+			mtools-native:do_populate_sysroot \
+			dosfstools-native:do_populate_sysroot \
+			virtual/kernel:do_deploy \
+			virtual/bootloader:do_deploy \
 			"
 
 # SD card image name

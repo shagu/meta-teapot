@@ -10,7 +10,7 @@ BOOTDD_VOLUME_ID ?= "${MACHINE}"
 SDIMG_ROOTFS_TYPE ?= "ext4"
 
 # This image depends on the rootfs image
-IMAGE_TYPEDEP_orangepizero-sdimg = "${SDIMG_ROOTFS_TYPE}"
+IMAGE_TYPEDEP_sdcard_orangepizero = "${SDIMG_ROOTFS_TYPE}"
 
 SDIMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.${SDIMG_ROOTFS_TYPE}"
 
@@ -20,7 +20,7 @@ BOOT_SPACE ?= "40960"
 # First partition begin at sector 2048 : 2048*1024 = 2097152
 IMAGE_ROOTFS_ALIGNMENT = "2048"
 
-IMAGE_DEPENDS_sdcard_orangepizero += " \
+do_image_sdcard[depends] += " \
 			parted-native:do_populate_sysroot \
 			mtools-native:do_populate_sysroot \
 			dosfstools-native:do_populate_sysroot \
@@ -31,7 +31,7 @@ IMAGE_DEPENDS_sdcard_orangepizero += " \
 # SD card image name
 SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.img"
 
-IMAGE_CMD_orangepizero-sdimg () {
+IMAGE_CMD_sdcard_orangepizero () {
 
 	# Align partitions
 	BOOT_SPACE_ALIGNED=$(expr ${BOOT_SPACE} + ${IMAGE_ROOTFS_ALIGNMENT} - 1)
