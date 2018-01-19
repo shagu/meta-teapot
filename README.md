@@ -1,3 +1,5 @@
+# unstable: under development.
+
 # meta-teapot
 
 The meta-teapot distribution is a yocto/openembedded layer for serveral boards of different kind of platforms. The focus is on mainline kernels and bootloaders rather than using outdated or stucked vendor blobs. This layer also provides some small images for different use-cases.
