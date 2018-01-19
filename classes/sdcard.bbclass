@@ -19,53 +19,52 @@
 inherit image_types
 
 do_image_sdcard[depends] += " \
-			parted-native:do_populate_sysroot \
-			mtools-native:do_populate_sysroot \
-			dosfstools-native:do_populate_sysroot \
-			virtual/kernel:do_deploy \
-			virtual/bootloader:do_deploy \
-			"
-
-IMAGE_TYPEDEP_sdcard = "ext4"
+    ${IMAGE_BASENAME}:do_image_ext4 \
+    parted-native:do_populate_sysroot \
+    mtools-native:do_populate_sysroot \
+    dosfstools-native:do_populate_sysroot \
+    virtual/kernel:do_deploy \
+    virtual/bootloader:do_deploy \
+  "
 
 # first partition begins at sector 2048 : 2048*1024 = 2097152
 ALIGNMENT ?= "2048" 
 
 SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.img"
-SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext4"
+SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.ext4"
 
 BOOT_LABEL ?= "${MACHINE}"
 BOOT_SIZE  ?= "16384"
-BOOT_FILES ?= "${KERNEL_IMAGETYPE} ${KERNEL_DEVICETREE}"
+BOOT_FILES ?= "${KERNEL_IMAGETYPE} ${KERNEL_DEVICETREE} ${UBOOT_SCRIPT}"
 
 IMAGE_CMD_sdcard () {
 
-	# calculate sizes
-	BOOT_SIZE_REAL=$(expr ${BOOT_SIZE} + ${ALIGNMENT} - 1)
-	BOOT_SIZE_REAL=$(expr ${BOOT_SIZE_REAL} - ${BOOT_SIZE_REAL} % ${ALIGNMENT})
-	SDIMG_SIZE=$(expr ${ALIGNMENT} + ${BOOT_SIZE_REAL} + $ROOTFS_SIZE + ${ALIGNMENT})
+  # calculate sizes
+  BOOT_SIZE_REAL=$(expr ${BOOT_SIZE} + ${ALIGNMENT} - 1)
+  BOOT_SIZE_REAL=$(expr ${BOOT_SIZE_REAL} - ${BOOT_SIZE_REAL} % ${ALIGNMENT})
+  SDIMG_SIZE=$(expr ${ALIGNMENT} + ${BOOT_SIZE_REAL} + $ROOTFS_SIZE + ${ALIGNMENT})
 
-	# create image file
-	dd if=/dev/zero of=${SDIMG} bs=1 count=0 seek=$(expr 1024 \* ${SDIMG_SIZE})
+  # create image file
+  dd if=/dev/zero of=${SDIMG} bs=1 count=0 seek=$(expr 1024 \* ${SDIMG_SIZE})
 
-	# setup partition table
-	parted -s ${SDIMG} mklabel msdos
-	parted -s ${SDIMG} unit KiB mkpart primary fat32 ${ALIGNMENT} $(expr ${BOOT_SIZE_REAL} \+ ${ALIGNMENT})
-	parted -s ${SDIMG} set 1 boot on
-	parted -s ${SDIMG} unit KiB mkpart primary ext2 $(expr ${BOOT_SIZE_REAL} \+ ${ALIGNMENT}) $(expr ${BOOT_SIZE_REAL} \+ ${ALIGNMENT} \+ ${ROOTFS_SIZE})
+  # setup partition table
+  parted -s ${SDIMG} mklabel msdos
+  parted -s ${SDIMG} unit KiB mkpart primary fat32 ${ALIGNMENT} $(expr ${BOOT_SIZE_REAL} \+ ${ALIGNMENT})
+  parted -s ${SDIMG} set 1 boot on
+  parted -s ${SDIMG} unit KiB mkpart primary ext2 $(expr ${BOOT_SIZE_REAL} \+ ${ALIGNMENT}) $(expr ${BOOT_SIZE_REAL} \+ ${ALIGNMENT} \+ ${ROOTFS_SIZE})
 
-	# create boot image
-	BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
-	rm -f ${WORKDIR}/boot.img; mkfs.vfat -n "${BOOT_LABEL}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
+  # create boot image
+  BOOT_BLOCKS=$(LC_ALL=C parted -s ${SDIMG} unit b print | awk '/ 1 / { print substr($4, 1, length($4 -1)) / 512 /2 }')
+  rm -f ${WORKDIR}/boot.img; mkfs.vfat -n "${BOOT_LABEL}" -S 512 -C ${WORKDIR}/boot.img $BOOT_BLOCKS
 
   # copy bootfiles
   for file in ${BOOT_FILES}; do 
     if echo $file | grep ":"; then
       source=$(echo $file | cut -d ":" -f 1)
       target=$(echo $file | cut -d ":" -f 2)
-    	MTOOLS_SKIP_CHECK=1 mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$source ::/$target
+      MTOOLS_SKIP_CHECK=1 mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$source ::/$target
     else
-    	MTOOLS_SKIP_CHECK=1 mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$file ::/
+      MTOOLS_SKIP_CHECK=1 mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/$file ::/
     fi
   done
 
@@ -74,8 +73,8 @@ IMAGE_CMD_sdcard () {
     dd if=${DEPLOY_DIR_IMAGE}/${SDIMG_SPL} of=${SDIMG} bs=${SDIMG_SPL_OFFSET} seek=1 conv=notrunc
   fi
 
-	# burn partitions
-	dd if=${WORKDIR}/boot.img of=${SDIMG} conv=notrunc seek=1 bs=$(expr ${ALIGNMENT} \* 1024)
-	dd if=${SDIMG_ROOTFS} of=${SDIMG} conv=notrunc seek=1 bs=$(expr 1024 \* ${BOOT_SIZE_REAL} + ${ALIGNMENT} \* 1024)
+  # burn partitions
+  dd if=${WORKDIR}/boot.img of=${SDIMG} conv=notrunc seek=1 bs=$(expr ${ALIGNMENT} \* 1024)
+  dd if=${SDIMG_ROOTFS} of=${SDIMG} conv=notrunc seek=1 bs=$(expr 1024 \* ${BOOT_SIZE_REAL} + ${ALIGNMENT} \* 1024)
 }
 
