@@ -1,5 +1,3 @@
-# unstable: under development.
-
 # meta-teapot
 
 The meta-teapot distribution is a yocto/openembedded layer for serveral boards of different kind of platforms. The focus is on mainline kernels and bootloaders rather than using outdated or stucked vendor blobs. This layer also provides some small images for different use-cases.
@@ -55,7 +53,18 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 
 # Supported Hardware
 
-## MACHINE=bananapi
+## MACHINE=orangepizero
+<img src="https://i.imgur.com/znlNLbE.jpg" align="right" height="100">
+
+    SoC:      Allwinner H2+
+    CPU:      ARM Cortex-A7 Quad-core 1.2 GHz
+    Memory:   256MB
+    Storage:  SD card
+
+[Website](http://www.orangepi.org/orangepizero/)
+
+
+## MACHINE=bananapi [not maintained]
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/BPI-M1.jpg/300px-BPI-M1.jpg" align="right" height="100">
 
     SoC:      Allwinner A20[2]
@@ -66,7 +75,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 [Wikipedia](https://en.wikipedia.org/wiki/Banana_Pi)
 
 
-## MACHINE=beaglebone
+## MACHINE=beaglebone [not maintained]
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Beaglebone_Black.jpg/220px-Beaglebone_Black.jpg" align="right" height="100">
 
     SoC:      TI AM335x
@@ -77,7 +86,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 [Wikipedia](https://en.wikipedia.org/wiki/BeagleBoard#BeagleBone_Black)
 
 
-## MACHINE=cubox
+## MACHINE=cubox [not maintained]
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cubox.png/250px-Cubox.png" align="right" height="100">
 
     SoC:      Marvell Armada 510
@@ -88,7 +97,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 [Wikipedia)](https://en.wikipedia.org/wiki/CuBox)
 
 
-## MACHINE=ecafe
+## MACHINE=ecafe [not maintained]
 <img src="https://i.imgur.com/PfR7sAd.jpg" align="right" height="100">
 
     SoC:      Freescale i.MX51
@@ -99,7 +108,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 [Website](https://www.hercules.com/de/legacy/bdd/p/157/ecafe-slim-hd-black-/)
 
 
-## MACHINE=pandaboard
+## MACHINE=pandaboard [not maintained]
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/PandaBoard_described.png/220px-PandaBoard_described.png" align="right" height="100">
 
     SoC:      TI OMAP4460
@@ -110,7 +119,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 [Wikipedia](https://en.wikipedia.org/wiki/PandaBoard)
 
 
-## MACHINE=raspberrypi
+## MACHINE=raspberrypi [not maintained]
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Raspberry_Pi_-_Model_A.jpg/220px-Raspberry_Pi_-_Model_A.jpg" align="right" height="100">
 
     SoC:      Broadcom BCM2835
@@ -121,7 +130,7 @@ The meta-teapot distribution is a yocto/openembedded layer for serveral boards o
 [Wikipedia](https://en.wikipedia.org/wiki/Raspberry_Pi)
 
 
-## MACHINE=wandboard
+## MACHINE=wandboard [not maintained]
 <img src="https://www.wandboard.org/app/uploads/2017/06/Wandboard-Image.png" align="right" height="100">
 
     SoC:      Freescale i.MX6
