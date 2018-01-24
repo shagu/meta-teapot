@@ -23,15 +23,16 @@ do_image_sdcard[depends] += " \
     parted-native:do_populate_sysroot \
     mtools-native:do_populate_sysroot \
     dosfstools-native:do_populate_sysroot \
-    virtual/kernel:do_deploy \
+    u-boot-mkimage-native:do_populate_sysroot \
     virtual/bootloader:do_deploy \
+    virtual/kernel:do_deploy \
   "
 
 # first partition begins at sector 2048 : 2048*1024 = 2097152
 ALIGNMENT ?= "2048" 
 
 SDIMG = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.img"
-SDIMG_ROOTFS = "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.ext4"
+SDIMG_ROOTFS = "${IMGDEPLOYDIR}/${IMAGE_NAME}.ext4"
 
 BOOT_LABEL ?= "${MACHINE}"
 BOOT_SIZE  ?= "16384"
